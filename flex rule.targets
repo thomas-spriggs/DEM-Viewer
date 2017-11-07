@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PropertyPageSchema
+      Include="$(MSBuildThisFileDirectory)$(MSBuildThisFileName).xml" />
+    <AvailableItemName
+      Include="Run_Flex">
+      <Targets>_Run_Flex</Targets>
+    </AvailableItemName>
+  </ItemGroup>
+  <UsingTask
+    TaskName="Run_Flex"
+    TaskFactory="XamlTaskFactory"
+    AssemblyName="Microsoft.Build.Tasks.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <Task>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).xml</Task>
+  </UsingTask>
+  <Target
+    Name="_Run_Flex"
+    BeforeTargets="$(Run_FlexBeforeTargets)"
+    AfterTargets="$(Run_FlexAfterTargets)"
+    Condition="'@(Run_Flex)' != ''"
+    DependsOnTargets="$(Run_FlexDependsOn);ComputeRun_FlexOutput"
+    Outputs="%(Run_Flex.Outputs)"
+    Inputs="%(Run_Flex.Identity);%(Run_Flex.AdditionalDependencies);$(MSBuildProjectFile)">
+    <ItemGroup
+      Condition="'@(SelectedFiles)' != ''">
+      <Run_Flex
+        Remove="@(Run_Flex)"
+        Condition="'%(Identity)' != '@(SelectedFiles)'" />
+    </ItemGroup>
+    <ItemGroup>
+      <Run_Flex_tlog
+        Include="%(Run_Flex.Outputs)"
+        Condition="'%(Run_Flex.Outputs)' != '' and '%(Run_Flex.ExcludedFromBuild)' != 'true'">
+        <Source>@(Run_Flex, '|')</Source>
+      </Run_Flex_tlog>
+    </ItemGroup>
+    <Message
+      Importance="High"
+      Text="%(Run_Flex.ExecutionDescription)" />
+    <WriteLinesToFile
+      Condition="'@(Run_Flex_tlog)' != '' and '%(Run_Flex_tlog.ExcludedFromBuild)' != 'true'"
+      File="$(TLogLocation)$(ProjectName).write.1u.tlog"
+      Lines="^%(Run_Flex_tlog.Source);@(Run_Flex_tlog-&gt;'%(Fullpath)')"
+      Encoding="Unicode" />
+    <Run_Flex
+      Condition="'@(Run_Flex)' != '' and '%(Run_Flex.ExcludedFromBuild)' != 'true'"
+      CommandLineTemplate="%(Run_Flex.CommandLineTemplate)"
+      AdditionalOptions="%(Run_Flex.AdditionalOptions)"
+      Inputs="%(Run_Flex.Identity)" />
+  </Target>
+  <PropertyGroup>
+    <ComputeLinkInputsTargets>
+            $(ComputeLinkInputsTargets);
+            ComputeRun_FlexOutput;
+          </ComputeLinkInputsTargets>
+    <ComputeLibInputsTargets>
+            $(ComputeLibInputsTargets);
+            ComputeRun_FlexOutput;
+          </ComputeLibInputsTargets>
+  </PropertyGroup>
+  <Target
+    Name="ComputeRun_FlexOutput"
+    Condition="'@(Run_Flex)' != ''">
+    <ItemGroup>
+      <Run_FlexDirsToMake
+        Condition="'@(Run_Flex)' != '' and '%(Run_Flex.ExcludedFromBuild)' != 'true'"
+        Include="%(Run_Flex.Outputs)" />
+      <Link
+        Include="%(Run_FlexDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+      <Lib
+        Include="%(Run_FlexDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+      <ImpLib
+        Include="%(Run_FlexDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+    </ItemGroup>
+    <MakeDir
+      Directories="@(Run_FlexDirsToMake-&gt;'%(RootDir)%(Directory)')" />
+  </Target>
+</Project>

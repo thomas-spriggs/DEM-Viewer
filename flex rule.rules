@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualStudioToolFile
+	Name="Flex"
+	Version="8.00"
+	>
+	<Rules>
+		<CustomBuildRule
+			Name="Run Flex"
+			DisplayName="Run Flex"
+			CommandLine="&quot;c:\Program Files (x86)\flex\bin\flex.exe&quot; -CF -o$(InputName).cpp $(InputName).l"
+			Outputs="$(InputName).cpp"
+			FileExtensions="*.l"
+			ExecutionDescription="Executing tool..."
+			>
+			<Properties>
+			</Properties>
+		</CustomBuildRule>
+	</Rules>
+</VisualStudioToolFile>

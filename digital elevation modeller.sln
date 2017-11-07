@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "digital elevation modeller", "digital elevation modeller.vcxproj", "{449825D1-4D82-47EE-A353-5D52386C5C84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{449825D1-4D82-47EE-A353-5D52386C5C84}.Debug|Win32.ActiveCfg = Debug|Win32
+		{449825D1-4D82-47EE-A353-5D52386C5C84}.Debug|Win32.Build.0 = Debug|Win32
+		{449825D1-4D82-47EE-A353-5D52386C5C84}.Release|Win32.ActiveCfg = Release|Win32
+		{449825D1-4D82-47EE-A353-5D52386C5C84}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {823536C2-E224-4B63-8FD9-F19118BEC3A4}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup
+    Condition="'$(Run_FlexBeforeTargets)' == '' and '$(Run_FlexAfterTargets)' == '' and '$(ConfigurationType)' != 'Makefile'">
+    <Run_FlexBeforeTargets>Midl</Run_FlexBeforeTargets>
+    <Run_FlexAfterTargets>CustomBuild</Run_FlexAfterTargets>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Run_FlexDependsOn
+      Condition="'$(ConfigurationType)' != 'Makefile'">_SelectedFiles;$(Run_FlexDependsOn)</Run_FlexDependsOn>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Run_Flex>
+      <CommandLineTemplate>"C:\Program Files (x86)\GnuWin32\bin\flex.exe" -CF -o%(Filename).cpp %(Filename).l</CommandLineTemplate>
+      <Outputs>%(Filename).cpp</Outputs>
+      <ExecutionDescription>Executing tool...</ExecutionDescription>
+    </Run_Flex>
+  </ItemDefinitionGroup>
+</Project>
